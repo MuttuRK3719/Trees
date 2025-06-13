@@ -1,0 +1,12 @@
+//find value in tree
+public TreeNode nextValue(TreeNode node,int key){
+        if(node==null)return null;
+        Queue<TreeNode> que=new LinkedList<>();
+        while(!que.isEmpty()){
+            TreeNode currentNode=que.poll();
+            if(currentNode.left!=null) que.offer(currentNode.left);
+            if(currentNode.right!=null)que.offer(currentNode.right);
+            if(currentNode.val==key) break;
+        }
+        return que.peek();
+    }
