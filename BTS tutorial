@@ -143,3 +143,144 @@ class Solution {
         return root;
     }
 }
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return helper(root,null,null);
+    }
+    public boolean helper(TreeNode node,Integer low,Integer high){
+        if(node==null) return true;
+        if(low!=null&& node.val<=low) return false;
+        if(high!=null&&node.val>=high) return false;
+        boolean leftT=helper(node.left,low,node.val);
+        boolean rightT=helper(node.right,node.val,high);
+        return leftT&&rightT;
+    }
+}
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void flatten(TreeNode root) {
+        TreeNode current=root;
+        while(current!=null){
+            if(current.left!=null){
+                TreeNode temp=current.left;
+                while(temp.right!=null){
+                 temp=temp.right;   
+                }
+                temp.right=current.right;
+                current.right=current.left;
+                current.left=null;
+            }
+            current=current.right;
+        }
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if(root==null) return null;
+        if(root==p||root==q) return root;
+        TreeNode leftT=lowestCommonAncestor(root.left,p,q);
+        TreeNode rightT=lowestCommonAncestor(root.right,p,q);
+        if(leftT!=null&&rightT!=null) return root;
+        return leftT==null?rightT:leftT;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        return helper(root,k).val;
+    }
+    int count=0;
+    public TreeNode helper(TreeNode node,int k){
+        if(node==null) return null;
+        TreeNode left=helper(node.left,k);
+        if(left!=null) return left;
+        count++;
+        if(count==k) return node;
+        return helper(node.right,k);
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+     if(preorder.length==0) return null;
+     int r=preorder[0];
+     int index=0;
+     for(int i=0;i<inorder.length;i++){
+        if(inorder[i]==r){
+            index=i;
+            break;
+        }
+     }
+     TreeNode node=new TreeNode(r);
+     node.left=buildTree(Arrays.copyOfRange(preorder,1,index+1),Arrays.copyOfRange(inorder,0,index));
+     node.right=buildTree(Arrays.copyOfRange(preorder,index+1,preorder.length),Arrays.copyOfRange(inorder,index+1,inorder.length));
+     return node;   
+    }
+}
