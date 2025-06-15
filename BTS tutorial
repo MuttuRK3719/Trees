@@ -10,3 +10,81 @@ public TreeNode nextValue(TreeNode node,int key){
         }
         return que.peek();
     }
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isCousins(TreeNode root, int x, int y) {
+       if(root==null) return false;
+       Queue<TreeNode> que=new LinkedList<>();
+       que.offer(root);
+       
+       while(!que.isEmpty()){
+        boolean isFindx=false;
+        boolean isFindy=false;
+        int size=que.size();
+        for(int i=0;i<size;i++){
+            TreeNode currNode=que.poll();
+            if(currNode.val==x)isFindx=true;
+            if(currNode.val==y)isFindy=true;
+            if(currNode.left!=null&&currNode.right!=null){
+            if(currNode.left.val==x&&currNode.right.val==y||currNode.right.val==x&&currNode.left.val==y) return false;
+            }
+            if(currNode.left!=null)que.offer(currNode.left);
+            if(currNode.right!=null)que.offer(currNode.right);
+        }
+        if(isFindx&&isFindy) return  true;
+        if(isFindx||isFindy)return false;
+       }
+       return false;
+    }
+}
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null)return true;
+        Queue<TreeNode>que=new LinkedList<>();
+        que.add(root.left);
+        que.add(root.right);
+        while(!que.isEmpty()){
+            TreeNode left=que.poll();
+            TreeNode right=que.poll();
+            if(left==null&&right==null) continue;
+            if(left==null||right==null) return false;
+            if(left.val!=right.val) return false;
+            que.add(left.left);
+            que.add(right.right);
+            que.add(left.right);
+            que.add(right.left);
+        }
+        return true;
+    }
+}
