@@ -284,3 +284,47 @@ class Solution {
      return node;   
     }
 }
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+//Hard Solution
+class Solution {
+    int ans=0;
+    public int maxPathSum(TreeNode root) {
+     helper(root);
+     return ans; 
+    }
+    int helper(TreeNode node){
+        if(node==null) return 0;
+        int leftN=helper(node.left);
+        int rightN=helper(node.right);
+        leftN=Math.max(0,leftN);
+        rightN=Math.max(0,rightN);
+        int pathSum=leftN+rightN+node.val;
+        ans=Math.max(pathSum,ans);
+        return Math.max(leftN,rightN)+node.val;
+    }  
+        static boolean pathExist(TreeNode root1,int []arr){
+        if(root1==null) return arr.length==0;
+        return helper(root1,arr,0);
+    }
+
+        private static boolean helper(TreeNode root1, int[] arr, int index) {
+    if(root1==null) return false;
+    if(index>=arr.length||root1.value!=arr[index]) return false;
+    if(root1.left==null&&root1.right==null&&index==arr.length-1) return true;
+    return helper(root1.left,arr,index+1)||helper(root1.right,arr,index+1);
+    }
+}
