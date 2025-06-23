@@ -1,3 +1,55 @@
+/*
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int item) {
+        data = item;
+        left = right = null;
+    }
+}
+*/
+
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> result=new ArrayList<>();
+        if(root==null) return result;
+        Queue<TreeNode> que=new LinkedList<>();
+        que.offer(root);
+        
+        while(!que.isEmpty()){
+            double sum=0;
+            int levelSize=que.size();
+            for(int i=0;i<levelSize;i++){
+                TreeNode currentN=que.poll();
+                if(currentN.left!=null) que.offer(currentN.left);
+                if(currentN.right!=null) que.offer(currentN.right);
+                sum+=currentN.val;
+            }
+            result.add(sum/levelSize);
+        }
+        return result;
+    }
+class Solution {
+    public ArrayList<ArrayList<Integer>> levelOrder(Node root) {
+        // Your code here
+        ArrayList<ArrayList<Integer>> result=new ArrayList<>();
+        if(root==null) return result;
+        Queue<Node> que=new LinkedList<>();
+        que.offer(root);
+        while(!que.isEmpty()){
+            int levelSize=que.size();
+            ArrayList<Integer>currentLevel=new ArrayList<>();
+            for(int i=0;i<levelSize;i++){
+                Node currentNode=que.poll();
+                if(currentNode.left!=null)que.offer(currentNode.left);
+                if(currentNode.right!=null)que.offer(currentNode.right);
+                currentLevel.add(currentNode.data);
+            }
+            result.add(currentLevel);
+        }
+        return result;
+    }
+}
 //find value in tree
 public TreeNode nextValue(TreeNode node,int key){
         if(node==null)return null;
