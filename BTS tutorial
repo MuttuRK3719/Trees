@@ -160,35 +160,7 @@ public Node connect(Node root) {
         }
         return result;
     }
-https://leetcode.com/problems/symmetric-tree/
-class Solution {
-    public boolean isSymmetric1(TreeNode root) {
-        if(root==null) return true;
-        Queue<TreeNode>que=new LinkedList<>();
-        que.add(root.left);
-        que.add(root.right);
-        while(!que.isEmpty()){
-            TreeNode leftN=que.poll();
-            TreeNode rightN=que.poll();
-            if(leftN==null&&rightN==null)continue;
-            if(leftN==null||rightN==null) return false;
-            if(leftN.val!=rightN.val) return false;
-            que.add(leftN.left);
-            que.add(rightN.right);
-            que.add(leftN.right);
-            que.add(rightN.left);
-        }
-        return true;
-    }
-    public boolean isSymmetric(TreeNode root) {
-        return root==null||isSymmetric(root.left,root.right);
-    }
-    boolean isSymmetric(TreeNode leftN,TreeNode rightN){
-        if(leftN==null||rightN==null) return leftN==rightN;
-        if(leftN.val!=rightN.val) return false;
-        return isSymmetric(leftN.left,rightN.right)&&isSymmetric(leftN.right,rightN.left);
-    }
-}
+
 //find value in tree
 public TreeNode nextValue(TreeNode node,int key){
         if(node==null)return null;
@@ -218,7 +190,17 @@ public TreeNode nextValue(TreeNode node,int key){
  *     }
  * }
  */
+https://leetcode.com/problems/symmetric-tree/
 class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        return root==null||isSymmetric(root.left,root.right);
+    }
+    boolean isSymmetric(TreeNode leftN,TreeNode rightN){
+        if(leftN==null||rightN==null) return leftN==rightN;
+        if(leftN.val!=rightN.val) return false;
+        return isSymmetric(leftN.left,rightN.right)&&isSymmetric(leftN.right,rightN.left);
+    }
+}
     public boolean isCousins(TreeNode root, int x, int y) {
        if(root==null) return false;
        Queue<TreeNode> que=new LinkedList<>();
@@ -244,41 +226,7 @@ class Solution {
        return false;
     }
 }
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
-class Solution {
-    public boolean isSymmetric(TreeNode root) {
-        if(root==null)return true;
-        Queue<TreeNode>que=new LinkedList<>();
-        que.add(root.left);
-        que.add(root.right);
-        while(!que.isEmpty()){
-            TreeNode left=que.poll();
-            TreeNode right=que.poll();
-            if(left==null&&right==null) continue;
-            if(left==null||right==null) return false;
-            if(left.val!=right.val) return false;
-            que.add(left.left);
-            que.add(right.right);
-            que.add(left.right);
-            que.add(right.left);
-        }
-        return true;
-    }
-}
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
