@@ -50,6 +50,145 @@ class Solution {
         return result;
     }
 }
+//https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+  public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>>result=new ArrayList<>();
+        if(root==null) return result;
+        Deque<TreeNode>que=new LinkedList<>();
+        que.add(root);
+        boolean reverse=false;
+        while(!que.isEmpty()){
+            int levelSize=que.size();
+            List<Integer>currLevel=new ArrayList<>();
+            for(int i=0;i<levelSize;i++){
+                if(!reverse){
+                    TreeNode currNode=que.pollFirst();
+                    currLevel.add(currNode.val);
+                    if(currNode.left!=null)que.addLast(currNode.left);
+                    if(currNode.right!=null)que.addLast(currNode.right);
+                }
+                else{
+                    TreeNode currNode=que.pollLast();
+                    currLevel.add(currNode.val);
+                    if(currNode.right!=null)que.addFirst(currNode.right);
+                    if(currNode.left!=null)que.addFirst(currNode.left);
+                }
+            }
+            result.add(currLevel);
+            reverse=!reverse;
+        }
+        return result;
+    }
+//https://leetcode.com/problems/binary-tree-level-order-traversal-ii/
+public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>>result=new ArrayList<>();
+    if(root==null) return result;
+    Queue<TreeNode>que=new LinkedList<>();
+    que.offer(root);
+    while(!que.isEmpty()){
+        int levelSize=que.size();
+       List<Integer> currlevel=new ArrayList<>();
+       for(int i=0;i<levelSize;i++){
+        TreeNode currNode=que.poll();
+        if(currNode.left!=null)que.offer(currNode.left);
+        if(currNode.right!=null)que.offer(currNode.right);
+        currlevel.add(currNode.val);
+       }
+       result.add(currlevel);
+    }
+    Collections.reverse(result);
+    return result;
+    }
+//https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
+public Node connect(Node root) {
+    if(root==null) return root;
+    Node leftmost=root;
+    while(leftmost.left!=null){
+       Node current=leftmost;
+        while(current!=null){
+            current.left.next=current.right;
+            if(current.next!=null)current.right.next=current.next.left;
+            current=current.next;
+        }
+        leftmost=leftmost.left;
+    }
+    return root;
+    }
+//https://leetcode.com/problems/cousins-in-binary-tree/
+  public boolean isCousins(TreeNode root, int x, int y) {
+        if(root==null) return false;
+        Queue<TreeNode>que=new LinkedList<>();
+        que.offer(root);
+        while(!que.isEmpty()){
+            boolean fx=false;
+            boolean fy=false;
+            int levelsize=que.size();
+            for(int i=0;i<levelsize;i++){
+                TreeNode currNode=que.poll();
+                if(currNode.left!=null&&currNode.right!=null){
+                    if(currNode.left.val==x&&currNode.right.val==y||currNode.right.val==x&&currNode.left.val==y) return false;
+                }
+                if(currNode.left!=null){
+                    que.offer(currNode.left);
+                    if(currNode.left.val==x)fx=true;
+                    if(currNode.left.val==y)fy=true;
+                }
+                if(currNode.right!=null){
+                    que.offer(currNode.right);
+                    if(currNode.right.val==x)fx=true;
+                    if(currNode.right.val==y)fy=true;
+                    }
+                if(fx&&fy) return true;
+            }
+        }
+        return false;
+    }
+//https://leetcode.com/problems/binary-tree-right-side-view/submissions/1674930646/
+ public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result=new ArrayList<>();
+        if(root==null) return result;
+        Queue<TreeNode> que=new LinkedList<>();
+        que.offer(root);
+        while(!que.isEmpty()){
+            int levelSize=que.size();
+            for(int i=0;i<levelSize;i++){
+                TreeNode currNode=que.poll();
+                if(currNode.left!=null)que.offer(currNode.left);
+                if(currNode.right!=null)que.offer(currNode.right);
+                if(i==levelSize-1) result.add(currNode.val);
+            }
+        }
+        return result;
+    }
+https://leetcode.com/problems/symmetric-tree/
+class Solution {
+    public boolean isSymmetric1(TreeNode root) {
+        if(root==null) return true;
+        Queue<TreeNode>que=new LinkedList<>();
+        que.add(root.left);
+        que.add(root.right);
+        while(!que.isEmpty()){
+            TreeNode leftN=que.poll();
+            TreeNode rightN=que.poll();
+            if(leftN==null&&rightN==null)continue;
+            if(leftN==null||rightN==null) return false;
+            if(leftN.val!=rightN.val) return false;
+            que.add(leftN.left);
+            que.add(rightN.right);
+            que.add(leftN.right);
+            que.add(rightN.left);
+        }
+        return true;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        return root==null||isSymmetric(root.left,root.right);
+    }
+    boolean isSymmetric(TreeNode leftN,TreeNode rightN){
+        if(leftN==null||rightN==null) return leftN==rightN;
+        if(leftN.val!=rightN.val) return false;
+        return isSymmetric(leftN.left,rightN.right)&&isSymmetric(leftN.right,rightN.left);
+    }
+}
 //find value in tree
 public TreeNode nextValue(TreeNode node,int key){
         if(node==null)return null;
