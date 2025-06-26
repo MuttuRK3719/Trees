@@ -160,7 +160,6 @@ public Node connect(Node root) {
         }
         return result;
     }
-
 //find value in tree
 public TreeNode nextValue(TreeNode node,int key){
         if(node==null)return null;
@@ -173,8 +172,6 @@ public TreeNode nextValue(TreeNode node,int key){
         }
         return que.peek();
     }
-
-
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -282,21 +279,6 @@ class Solution {
         return root;
     }
 }
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public boolean isValidBST(TreeNode root) {
         return helper(root,null,null);
@@ -310,22 +292,6 @@ class Solution {
         return leftT&&rightT;
     }
 }
-
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode() {}
- *     TreeNode(int val) { this.val = val; }
- *     TreeNode(int val, TreeNode left, TreeNode right) {
- *         this.val = val;
- *         this.left = left;
- *         this.right = right;
- *     }
- * }
- */
 class Solution {
     public void flatten(TreeNode root) {
         TreeNode current=root;
